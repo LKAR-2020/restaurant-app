@@ -1,9 +1,20 @@
 import React from 'react';
 import logo from '../img/logo.png';
 import avatar from '../img/avatar.png';
+import {motion} from 'framer-motion';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"; 
+import { app } from "../Firebase.config";
+// import { link } from "react-router-dom"
 import {MdShoppingBasket} from 'react-icons/md'
 
 const Header = () => {
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider(); 
+  const login = async() => {
+     const response = await signInWithPopup(firebaseAuth,provider)
+     console.log(response);
+
+  }
     return (
         <header className="fixe z-50 w-screen bg-slate-300 p-6 px-16 ">
           {/* desktop et tablette */}
@@ -29,7 +40,14 @@ const Header = () => {
                 
 
 
-                <img src={avatar} alt="userProfils " className='w-10 h-10 min-h-[40px] min-w-[40px]' />
+                <div className="relative">
+                <motion.img whileTap= {{scale: 0.6 }}
+                  src={avatar} 
+                  alt="userProfils " 
+                  className='w-10 h-10 min-h-[40px] min-w-[40px] cursor-pointer' 
+                  onClick= { login }
+                  />
+                </div>
             </div>
             
           </div>
